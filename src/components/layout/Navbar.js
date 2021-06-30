@@ -1,15 +1,28 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import AuthContext from '../../context/AuthContext'
+import LogoutBtn from '../auth/LogoutBtn'
 
 function Navbar() {
-    return (
-      <div>
-        <Link to='/'>Home</Link>
-        <Link to='/register'>Register</Link>
-        <Link to='/login'>Login</Link>
-        <Link to='/decks'>Decks</Link>
-      </div>
-    )
+  const { loggedIn } = useContext(AuthContext)
+
+  return (
+    <div>
+      <Link to='/'>Home</Link>
+      {loggedIn === false && (
+        <>
+          <Link to='/register'>Register</Link>
+          <Link to='/login'>Login</Link>
+        </>
+      )}
+      {loggedIn === true && (
+        <>
+          <Link to='/decks'>Decks</Link>
+          <LogoutBtn />
+        </>
+      )}
+    </div>
+  )
 }
 
 export default Navbar

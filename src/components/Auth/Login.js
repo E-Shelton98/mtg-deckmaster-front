@@ -1,27 +1,25 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
+import { useHistory } from 'react-router-dom'
 
-function Register() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+function Login() {
   const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const { getLoggedIn } = useContext(AuthContext)
   const history = useHistory()
 
-  async function register(e) {
+  async function login(e) {
     e.preventDefault()
 
     try {
-      const registerData = {
-        email,
-        password,
+      const loginData = {
         username,
+        password,
       }
 
-      await axios.post('http://localhost:5000/auth/', registerData)
+      await axios.post('http://localhost:5000/auth/login', loginData)
       await getLoggedIn()
       history.push('/')
     } catch (err) {
@@ -31,18 +29,12 @@ function Register() {
 
   return (
     <div>
-      <h1>Register a new account</h1>
-      <form onSubmit={register}>
+      <h1>Login to your account</h1>
+      <form onSubmit={login}>
         <input
           placeholder='Username'
           onChange={(e) => setUsername(e.target.value)}
           value={username}
-        />
-        <input
-          type='email'
-          placeholder='Email'
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
         />
         <input
           type='password'
@@ -50,10 +42,10 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <button type='submit'>Register</button>
+        <button type='submit'>Login</button>
       </form>
     </div>
   )
 }
 
-export default Register
+export default Login

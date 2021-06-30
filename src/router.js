@@ -1,26 +1,40 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Register from './components/Auth/Register'
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
 import Navbar from './components/layout/Navbar'
+import AuthContext from './context/AuthContext'
 
-export default function router() {
+function Router() {
+  const { loggedIn } = useContext(AuthContext)
+
   return (
     <BrowserRouter>
-      <Navbar/>
+      <Navbar />
       <Switch>
         <Route exact path='/'>
           <div>Home</div>
         </Route>
-        <Route exact path='/register'>
-          <Register/>
-        </Route>
-        <Route exact path='/login'>
-          <div>Login</div>
-        </Route>
-        <Route exact path='/decks'>
-          <div>Decks</div>
-        </Route>
+        {loggedIn === false && (
+          <>
+            <Route exact path='/register'>
+              <Register />
+            </Route>
+            <Route exact path='/login'>
+              <Login />
+            </Route>
+          </>
+        )}
+        {loggedIn === true && (
+          <>
+            <Route exact path='/decks'>
+              <div>Decks</div>
+            </Route>
+          </>
+        )}
       </Switch>
     </BrowserRouter>
   )
 }
+
+export default Router
