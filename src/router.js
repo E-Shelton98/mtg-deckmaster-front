@@ -4,6 +4,7 @@ import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import Navbar from './components/layout/Navbar'
 import AuthContext from './context/AuthContext'
+import Decks from './components/content/Decks'
 
 function Router() {
   const { loggedIn } = useContext(AuthContext)
@@ -28,7 +29,7 @@ function Router() {
         {loggedIn === true && (
           <>
             <Route exact path='/decks'>
-              <div>Decks</div>
+              <Decks/>
             </Route>
           </>
         )}
