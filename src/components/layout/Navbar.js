@@ -13,11 +13,13 @@ function Navbar() {
         <>
           <Link to='/register'>Register</Link>
           <Link to='/login'>Login</Link>
+          <Link to='/cards'>Cards</Link>
         </>
       )}
       {loggedIn === true && (
         <>
           <Link to='/decks'>Decks</Link>
+          <Link to='/cards'>Cards</Link>
           <LogoutBtn />
         </>
       )}

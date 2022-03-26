@@ -4,7 +4,8 @@ import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import Navbar from './components/layout/Navbar'
 import AuthContext from './context/AuthContext'
-import Decks from './components/content/Decks'
+import Decks from './components/content/decks/Decks'
+import Cards from './components/content/cards/Cards'
 
 function Router() {
   const { loggedIn } = useContext(AuthContext)
@@ -14,7 +15,7 @@ function Router() {
       <Navbar />
       <Switch>
         <Route exact path='/'>
-          <div>Home</div>
+          <div>Home Page</div>
         </Route>
         {loggedIn === false && (
           <>
@@ -30,6 +31,9 @@ function Router() {
           <>
             <Route exact path='/decks'>
               <Decks/>
+            </Route>
+            <Route exact path='/cards'>
+              <Cards/>
             </Route>
           </>
         )}
