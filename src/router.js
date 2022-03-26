@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Register from './components/auth/Register.js'
-import Login from './components/auth/Login.js'
-import Navbar from './components/layout/Navbar.js'
-import AuthContext from './context/AuthContext.js'
-import Decks from './components/content/decks/Decks.js'
-import Cards from './components/content/cards/Cards.js'
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
+import Navbar from './components/layout/Navbar'
+import AuthContext from './context/AuthContext'
+import Decks from './components/content/decks/Decks'
+import Cards from './components/content/cards/Cards'
 
 function Router() {
   const { loggedIn } = useContext(AuthContext)
