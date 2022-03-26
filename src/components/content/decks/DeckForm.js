@@ -14,7 +14,7 @@ function DeckForm({getDecks}) {
           notes: ['A note'],
           name: deckName
         }
-        await axios.post('http://localhost:5000/decks/', deckData)
+        await axios.post('https://deckmaster.herokuapp.com/decks/', deckData)
         getDecks()
     } catch(err) {
         console.error(err)
