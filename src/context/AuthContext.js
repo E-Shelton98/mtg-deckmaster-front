@@ -10,6 +10,7 @@ function AuthContextProvider(props) {
     const loggedInRes = await axios.get(
       'https://deckmaster.herokuapp.com/auth/loggedIn'
     )
+    console.log(loggedInRes.data)
     setLoggedIn(loggedInRes.data)
   }
 
