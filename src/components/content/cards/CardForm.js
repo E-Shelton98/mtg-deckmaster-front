@@ -17,7 +17,7 @@ function CardForm({ getCards }) {
     e.preventDefault()
 
     try {
-      let cardFetchString = `https://deckmaster.herokuapp.com/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${cardName}`
+      let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${cardName}`
       if (cardCMC !== '') {
         cardFetchString = cardFetchString + `&cmc=${cardCMC}`
       }
