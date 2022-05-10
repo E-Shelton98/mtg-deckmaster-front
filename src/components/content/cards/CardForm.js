@@ -12,7 +12,9 @@ function CardForm({ getCards }) {
   const [cardColorRed, setCardColorRed] = useState(false)
   const [cardColorBlue, setCardColorBlue] = useState(false)
   const [cardColorWhite, setCardColorWhite] = useState(false)
+
   const [cardCMC, setCardCMC] = useState('')
+  const [cardIsLand, setCardIsLand] = useState(false)
 
   //SEARCH MUST BE STRICT UPPER CASING OF FIRST LETTER (ie. Zephyr Boots)
   const [cardName, setCardName] = useState()
@@ -23,6 +25,7 @@ function CardForm({ getCards }) {
     cardColorRed,
     cardColorBlue,
     cardColorWhite,
+    cardIsLand,
     e
   ) {
     e.preventDefault()
@@ -62,10 +65,14 @@ function CardForm({ getCards }) {
       cardColorWhite
     )
 
+    let cardType = ''
+    if (cardIsLand) {
+      cardType = 'Land'
+    }
     cardColor = cardColor.join('')
 
     try {
-      let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${cardName}`
+      let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${cardName}&type_line=${cardType}`
       if (cardCMC !== '') {
         cardFetchString = cardFetchString + `&cmc=${cardCMC}`
       }
@@ -89,17 +96,21 @@ function CardForm({ getCards }) {
             cardColorRed,
             cardColorBlue,
             cardColorWhite,
+            cardIsLand,
             e
           )
         }>
-        <input
-          type='text'
-          placeholder='legal In'
+        <select
+          id='format'
           onChange={(e) => {
             setCardLegality(e.target.value)
-          }}
-          value={cardLegality}
-        />
+          }}>
+          <option value='standard'>Standard</option>
+          <option value='commander'>Commander</option>
+          <option value='modern'>Modern</option>
+          <option value='historic'>Historic</option>
+          <option value='pauper'>Pauper</option>
+        </select>
 
         <input
           type='checkbox'
@@ -147,6 +158,13 @@ function CardForm({ getCards }) {
               setCardColorWhite(!cardColorWhite)
             }}></input>
         </div>
+        <input
+          type='checkbox'
+          id='isLand'
+          name='land'
+          onChange={() => {
+            setCardIsLand(!cardIsLand)
+          }}></input>
         <input
           type='text'
           placeholder='Card CMC'
