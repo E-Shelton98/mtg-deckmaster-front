@@ -1,0 +1,14 @@
+.container {
+  padding: 1rem 0rem;
+  background-color: #02010a;
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container .nav-links .link {
+  padding: 0.5rem;
+  color: white;
+  text-decoration: none;
+}

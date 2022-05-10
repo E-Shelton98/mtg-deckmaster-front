@@ -4,7 +4,7 @@ import axios from 'axios'
 function CardForm({ getCards }) {
   //LEGALITY === FORMAT IN DB (ie. format = standard means LEGAL in standard)
   const [cardLegality, setCardLegality] = useState('standard')
-  const [cardRestricted, setCardRestricted] = useState('false')
+  const [cardRestricted, setCardRestricted] = useState(false)
 
   //TO SELECT A CARD THAT IS ALL COLORS AT ONCE DO BGRUW
   const [cardColor, setCardColor] = useState([])
@@ -17,11 +17,11 @@ function CardForm({ getCards }) {
     e.preventDefault()
 
     try {
-      let cardFetchString = `https://deckmaster.herokuapp.com/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${cardName}`
+      let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${cardName}`
       if (cardCMC !== '') {
         cardFetchString = cardFetchString + `&cmc=${cardCMC}`
       }
-      if (cardRestricted === 'true') {
+      if (cardRestricted === true) {
         cardFetchString = cardFetchString + `&restricted=true`
       }
       let cards = await axios.get(cardFetchString)
@@ -44,22 +44,12 @@ function CardForm({ getCards }) {
         />
 
         <input
-          type='radio'
+          type='checkbox'
           id='restricted'
           name='restricted_modifier'
           onChange={(e) => {
-            setCardRestricted(e.target.value)
+            setCardRestricted(!cardRestricted)
           }}
-          value='true'
-        />
-        <input
-          type='radio'
-          id='not_restricted'
-          name='restricted_modifier'
-          onChange={(e) => {
-            setCardRestricted(e.target.value)
-          }}
-          value='false'
         />
 
         <input

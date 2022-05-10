@@ -1,0 +1,9 @@
+.btn-div {
+    padding: 0rem 0.5rem;
+}
+
+#logout-btn {
+    padding: 0.5rem;
+    background-color: darkslategray;
+    color: white;
+}
