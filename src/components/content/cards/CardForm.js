@@ -6,64 +6,70 @@ function CardForm({ getCards }) {
   const [cardLegality, setCardLegality] = useState('standard')
   const [cardRestricted, setCardRestricted] = useState(false)
 
-  //TO SELECT A CARD THAT IS ALL COLORS AT ONCE DO BGRUW
-  const [cardColorBlack, setCardColorBlack] = useState(false)
-  const [cardColorGreen, setCardColorGreen] = useState(false)
-  const [cardColorRed, setCardColorRed] = useState(false)
-  const [cardColorBlue, setCardColorBlue] = useState(false)
-  const [cardColorWhite, setCardColorWhite] = useState(false)
+  const [checkedState, setCheckedState] = useState({
+    black: false,
+    green: false,
+    red: false,
+    blue: false,
+    white: false,
+    multicolored: false,
+    colorless: false,
+  })
 
+  //Create state to hold value of CMC (Converted Mana Cost) of a card for searching
   const [cardCMC, setCardCMC] = useState('')
+
+  //Create state to hold boolean value of whether searching for a land type card
   const [cardIsLand, setCardIsLand] = useState(false)
 
   //SEARCH MUST BE STRICT UPPER CASING OF FIRST LETTER (ie. Zephyr Boots)
-  const [cardName, setCardName] = useState()
+  const [cardName, setCardName] = useState('')
 
-  async function searchCards(
-    cardColorBlack,
-    cardColorGreen,
-    cardColorRed,
-    cardColorBlue,
-    cardColorWhite,
-    cardIsLand,
-    e
-  ) {
+  async function searchCards(checkedState, cardIsLand, cardName, e) {
+    console.log('searchCards checkedState :', checkedState)
     e.preventDefault()
 
-    let cardColorStringFunction = function (
-      cardColorBlack,
-      cardColorGreen,
-      cardColorRed,
-      cardColorBlue,
-      cardColorWhite
-    ) {
+    let cardColorStringFunction = function (checkedState) {
       let cardColor = []
-      if (cardColorBlack) {
+
+      if (checkedState['black']) {
         cardColor.push('B')
       }
-      if (cardColorGreen) {
+      if (checkedState['green']) {
         cardColor.push('G')
       }
-      if (cardColorRed) {
+      if (checkedState['red']) {
         cardColor.push('R')
       }
-      if (cardColorBlue) {
+      if (checkedState['blue']) {
         cardColor.push('U')
       }
-      if (cardColorWhite) {
+      if (checkedState['white']) {
         cardColor.push('W')
       }
 
       return cardColor
     }
 
-    let cardColor = cardColorStringFunction(
-      cardColorBlack,
-      cardColorGreen,
-      cardColorRed,
-      cardColorBlue,
-      cardColorWhite
-    )
+    let capitalizeNameFunction = function (textInput) {
+      let words = textInput.split(' ')
+
+      for (let i = 0; i < words.length; i++) {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1)
+      }
+
+      words = words.join(' ')
+
+      return words
+    }
+
+    let cardColor = cardColorStringFunction(checkedState)
+
+    let capitalizedName = ''
+
+    if (cardName !== '') {
+      capitalizedName = capitalizeNameFunction(cardName)
+    }
 
     let cardType = ''
     if (cardIsLand) {
@@ -72,34 +78,49 @@ function CardForm({ getCards }) {
     cardColor = cardColor.join('')
 
     try {
-      let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${cardName}&type_line=${cardType}`
-      if (cardCMC !== '') {
-        cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+      if (cardType === 'Land') {
+        let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
+        if (cardCMC !== '') {
+          cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+        }
+        if (cardRestricted === true) {
+          cardFetchString = cardFetchString + `&restricted=true`
+        }
+        let cards = await axios.get(cardFetchString)
+        getCards(cards)
+      } else {
+        let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}`
+        if (cardCMC !== '') {
+          cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+        }
+        if (cardRestricted === true) {
+          cardFetchString = cardFetchString + `&restricted=true`
+        }
+        let cards = await axios.get(cardFetchString)
+        getCards(cards)
       }
-      if (cardRestricted === true) {
-        cardFetchString = cardFetchString + `&restricted=true`
-      }
-      let cards = await axios.get(cardFetchString)
-      getCards(cards)
     } catch (err) {
       console.error(err)
     }
   }
 
+  function handleCheckboxClick(clickedCheckbox) {
+    let updatedColor = { [clickedCheckbox]: !checkedState[clickedCheckbox] }
+    console.log('handleCheckboxClick updatedColor: ', updatedColor)
+    setCheckedState((checkedState) => ({
+      ...checkedState,
+      ...updatedColor,
+    }))
+
+    console.log('handleCheckboxClick checkedState: ', checkedState)
+  }
+
   return (
     <div>
       <form
-        onSubmit={(e) =>
-          searchCards(
-            cardColorBlack,
-            cardColorGreen,
-            cardColorRed,
-            cardColorBlue,
-            cardColorWhite,
-            cardIsLand,
-            e
-          )
-        }>
+        onSubmit={(e) => {
+          searchCards(checkedState, cardIsLand, cardName, e)
+        }}>
         <select
           id='format'
           onChange={(e) => {
@@ -126,36 +147,57 @@ function CardForm({ getCards }) {
             type='checkbox'
             id='color-black'
             name='color'
-            onChange={() => {
-              setCardColorBlack(!cardColorBlack)
+            value='black'
+            onClick={(e) => {
+              handleCheckboxClick(e.target.value)
             }}></input>
           <input
             type='checkbox'
             id='color-green'
             name='color'
-            onChange={() => {
-              setCardColorGreen(!cardColorGreen)
+            value='green'
+            onClick={(e) => {
+              handleCheckboxClick(e.target.value)
             }}></input>
           <input
             type='checkbox'
             id='color-red'
             name='color'
-            onChange={() => {
-              setCardColorRed(!cardColorRed)
+            value='red'
+            onClick={(e) => {
+              handleCheckboxClick(e.target.value)
             }}></input>
           <input
             type='checkbox'
             id='color-blue'
             name='color'
-            onChange={() => {
-              setCardColorBlue(!cardColorBlue)
+            value='blue'
+            onClick={(e) => {
+              handleCheckboxClick(e.target.value)
             }}></input>
           <input
             type='checkbox'
             id='color-white'
             name='color'
-            onChange={() => {
-              setCardColorWhite(!cardColorWhite)
+            value='white'
+            onClick={(e) => {
+              handleCheckboxClick(e.target.value)
+            }}></input>
+          <input
+            type='checkbox'
+            id='color-multicolored'
+            name='color'
+            value='multicolored'
+            onClick={(e) => {
+              handleCheckboxClick(e.target.value)
+            }}></input>
+          <input
+            type='checkbox'
+            id='color-colorless'
+            name='color'
+            value='colorless'
+            onClick={(e) => {
+              handleCheckboxClick(e.target.value)
             }}></input>
         </div>
         <input
@@ -181,7 +223,7 @@ function CardForm({ getCards }) {
           }}
           value={cardName}
         />
-        <button type='submit'>Search Cards</button>
+        <button type=''>Search Cards</button>
       </form>
     </div>
   )
