@@ -7,9 +7,16 @@ import '../../../styles/cards/cards.css'
 function Cards() {
   const [cards, setCards] = useState([])
 
-  async function getCards(cardFetchRes) {
-    if (cardFetchRes !== undefined) {
-      setCards(cardFetchRes.data)
+  async function getCards(cardAxiosRes) {
+    if (cardAxiosRes !== undefined) {
+      let cardsResponse = []
+      for (const cardGroup of cardAxiosRes) {
+        cardsResponse = cardsResponse.concat(cardGroup.data)
+      }
+      console.log(cardAxiosRes)
+      console.log(cardsResponse)
+      
+      setCards(cardsResponse)
     }
   }
 

@@ -13,7 +13,6 @@ function CardForm({ getCards }) {
     blue: false,
     white: false,
     multicolored: false,
-    colorless: false,
   })
 
   //Create state to hold value of CMC (Converted Mana Cost) of a card for searching
@@ -26,7 +25,9 @@ function CardForm({ getCards }) {
   const [cardName, setCardName] = useState('')
 
   async function searchCards(checkedState, cardIsLand, cardName, e) {
-    console.log('searchCards checkedState :', checkedState)
+    let cardSearchResults = []
+    let cardSearchStrings = []
+    let promises = []
     e.preventDefault()
 
     let cardColorStringFunction = function (checkedState) {
@@ -75,33 +76,72 @@ function CardForm({ getCards }) {
     if (cardIsLand) {
       cardType = 'Land'
     }
-    cardColor = cardColor.join('')
 
-    try {
-      if (cardType === 'Land') {
-        let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
-        if (cardCMC !== '') {
-          cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+    for (let color of cardColor) {
+      try {
+        if (cardType === 'Land') {
+          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${color}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
+          if (cardCMC !== '') {
+            cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+          }
+          if (cardRestricted === true) {
+            cardFetchString = cardFetchString + `&restricted=true`
+          }
+          cardSearchStrings.push(cardFetchString)
+        } else {
+          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${color}&cmc=${cardCMC}&name=${capitalizedName}`
+          if (cardCMC !== '') {
+            cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+          }
+          if (cardRestricted === true) {
+            cardFetchString = cardFetchString + `&restricted=true`
+          }
+          cardSearchStrings.push(cardFetchString)
         }
-        if (cardRestricted === true) {
-          cardFetchString = cardFetchString + `&restricted=true`
-        }
-        let cards = await axios.get(cardFetchString)
-        getCards(cards)
-      } else {
-        let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}`
-        if (cardCMC !== '') {
-          cardFetchString = cardFetchString + `&cmc=${cardCMC}`
-        }
-        if (cardRestricted === true) {
-          cardFetchString = cardFetchString + `&restricted=true`
-        }
-        let cards = await axios.get(cardFetchString)
-        getCards(cards)
+      } catch (err) {
+        console.error(err)
       }
-    } catch (err) {
-      console.error(err)
     }
+
+    if (checkedState['multicolored'] === true) {
+      cardColor = cardColor.join('')
+      try {
+        if (cardType === 'Land') {
+          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
+          if (cardCMC !== '') {
+            cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+          }
+          if (cardRestricted === true) {
+            cardFetchString = cardFetchString + `&restricted=true`
+          }
+          let cards = await axios.get(cardFetchString)
+          cardSearchResults.push(cards.data)
+        } else {
+          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}`
+          if (cardCMC !== '') {
+            cardFetchString = cardFetchString + `&cmc=${cardCMC}`
+          }
+          if (cardRestricted === true) {
+            cardFetchString = cardFetchString + `&restricted=true`
+          }
+          cardSearchStrings.push(cardFetchString)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    console.log(cardSearchStrings)
+    //getCards(cardSearchResults)
+
+    for (let searchString of cardSearchStrings) {
+      promises.push(axios.get(searchString))
+    }
+    
+    Promise.all(promises).then((results) => {
+      getCards(results)
+    }).catch((e) => {
+      console.log("An error happened: ", e.error)
+    })
   }
 
   function handleCheckboxClick(clickedCheckbox) {
@@ -188,14 +228,6 @@ function CardForm({ getCards }) {
             id='color-multicolored'
             name='color'
             value='multicolored'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-colorless'
-            name='color'
-            value='colorless'
             onClick={(e) => {
               handleCheckboxClick(e.target.value)
             }}></input>
