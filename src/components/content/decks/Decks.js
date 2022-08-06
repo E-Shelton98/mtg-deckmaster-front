@@ -7,7 +7,7 @@ function Decks() {
   const [decks, setDecks] = useState([])
 
   async function getDecks() {
-    const decksRes = await axios.get('http://localhost:5000/decks')
+    const decksRes = await axios.get('https://deckmaster.herokuapp.com/decks')
     setDecks(decksRes.data)
   }
 

@@ -13,8 +13,6 @@ function Cards() {
       for (const cardGroup of cardAxiosRes) {
         cardsResponse = cardsResponse.concat(cardGroup.data)
       }
-      console.log(cardAxiosRes)
-      console.log(cardsResponse)
       
       setCards(cardsResponse)
     }
@@ -33,7 +31,7 @@ function Cards() {
             cards={cards}
             RenderComponent={Card}
             pageLimit={5}
-            dataLimit={6}
+            dataLimit={8}
           />
         </>
       ) : (

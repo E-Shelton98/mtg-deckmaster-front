@@ -21,7 +21,7 @@ function Register() {
         username,
       }
 
-      await axios.post('http://localhost:5000/auth/', registerData)
+      await axios.post('https://deckmaster.herokuapp.com/auth/', registerData)
       await getLoggedIn()
       history.push('/')
     } catch (err) {

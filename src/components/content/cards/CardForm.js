@@ -80,7 +80,7 @@ function CardForm({ getCards }) {
     for (let color of cardColor) {
       try {
         if (cardType === 'Land') {
-          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${color}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
+          let cardFetchString = `https://deckmaster.herokuapp.com/cards?format=${cardLegality}&colors=${color}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
           if (cardCMC !== '') {
             cardFetchString = cardFetchString + `&cmc=${cardCMC}`
           }
@@ -89,7 +89,7 @@ function CardForm({ getCards }) {
           }
           cardSearchStrings.push(cardFetchString)
         } else {
-          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${color}&cmc=${cardCMC}&name=${capitalizedName}`
+          let cardFetchString = `https://deckmaster.herokuapp.com/cards?format=${cardLegality}&colors=${color}&cmc=${cardCMC}&name=${capitalizedName}`
           if (cardCMC !== '') {
             cardFetchString = cardFetchString + `&cmc=${cardCMC}`
           }
@@ -107,7 +107,7 @@ function CardForm({ getCards }) {
       cardColor = cardColor.join('')
       try {
         if (cardType === 'Land') {
-          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
+          let cardFetchString = `https://deckmaster.herokuapp.com/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}&type_line=${cardType}`
           if (cardCMC !== '') {
             cardFetchString = cardFetchString + `&cmc=${cardCMC}`
           }
@@ -117,7 +117,7 @@ function CardForm({ getCards }) {
           let cards = await axios.get(cardFetchString)
           cardSearchResults.push(cards.data)
         } else {
-          let cardFetchString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}`
+          let cardFetchString = `https://deckmaster.herokuapp.com/cards?format=${cardLegality}&colors=${cardColor}&cmc=${cardCMC}&name=${capitalizedName}`
           if (cardCMC !== '') {
             cardFetchString = cardFetchString + `&cmc=${cardCMC}`
           }
@@ -136,12 +136,14 @@ function CardForm({ getCards }) {
     for (let searchString of cardSearchStrings) {
       promises.push(axios.get(searchString))
     }
-    
-    Promise.all(promises).then((results) => {
-      getCards(results)
-    }).catch((e) => {
-      console.log("An error happened: ", e.error)
-    })
+
+    Promise.all(promises)
+      .then((results) => {
+        getCards(results)
+      })
+      .catch((e) => {
+        console.log('An error happened: ', e.error)
+      })
   }
 
   function handleCheckboxClick(clickedCheckbox) {
