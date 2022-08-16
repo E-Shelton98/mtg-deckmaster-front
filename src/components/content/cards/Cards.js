@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react'
+
+//Import the CardForm component to create the form used for searching for cards
 import CardForm from './CardForm'
+
+//Import the CardList component to create the pagination component used to display the search results
 import CardList from './CardList'
-import Card from './Card.js'
+
+//Import the style sheet that is specific to this component 
+//Style Sheets are organized as a mirror to the component organization
 import '../../../styles/cards/cards.css'
+
+
+//Cards component function to establish a parent component for the card search and display functionalities of the site. Intended to be used as both a separate page, as well as imported into the deck building section of the site.
+
+//Cards does not receive any props, but it does pass many to its children components CardForm and CardList.
 
 function Cards() {
   const [cards, setCards] = useState([])
@@ -29,7 +40,6 @@ function Cards() {
         <>
           <CardList
             cards={cards}
-            RenderComponent={Card}
             pageLimit={5}
             dataLimit={8}
           />

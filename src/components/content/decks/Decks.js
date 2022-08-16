@@ -6,9 +6,15 @@ import DeckList from './DeckList'
 function Decks() {
   const [decks, setDecks] = useState([])
 
-  async function getDecks() {
-    const decksRes = await axios.get('https://deckmaster.herokuapp.com/decks')
-    setDecks(decksRes.data)
+  async function getDecks(deckAxiosRes) {
+    if (deckAxiosRes !== undefined) {
+      let decksResponse = []
+      for (const deckGroup of deckAxiosRes) {
+        decksResponse = decksResponse.concat(deckGroup.data)
+      }
+
+      setDecks(decksResponse)
+    }
   }
 
   useEffect(() => {
