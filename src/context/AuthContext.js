@@ -7,9 +7,8 @@ function AuthContextProvider(props) {
   const [loggedIn, setLoggedIn] = useState(undefined)
 
   async function getLoggedIn() {
-    const loggedInRes = await axios.get(
-      'https://deckmaster.herokuapp.com/auth/loggedIn'
-    )
+    //const loggedInRes = await axios.get('http://localhost:5000/auth/loggedIn')
+    const loggedInRes = await axios.get('https://deckmaster.onrender.com/auth/loggedIn')
     setLoggedIn(loggedInRes.data)
   }
 
