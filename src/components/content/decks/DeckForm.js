@@ -64,7 +64,7 @@ function DeckForm({ getDecks }) {
 
     for (let color of deckColor) {
       try {
-        let deckAxiosString = `http://localhost:5000/decks?format=${deckLegality}&colors=${color}&name=${capitalizedName}`
+        let deckAxiosString = `https://deckmaster.onrender.com/decks?format=${deckLegality}&colors=${color}&name=${capitalizedName}`
 
         deckSearchStrings.push(deckAxiosString)
       } catch (err) {
@@ -75,7 +75,7 @@ function DeckForm({ getDecks }) {
     if (checkedState['multicolored'] === true) {
       deckColor = deckColor.join('')
       try {
-        let deckAxiosString = `http://localhost:5000/decks?format=${deckLegality}&colors=${deckColor}&name=${capitalizedName}`
+        let deckAxiosString = `https://deckmaster.onrender.com/decks?format=${deckLegality}&colors=${deckColor}&name=${capitalizedName}`
 
         deckSearchStrings.push(deckAxiosString)
       } catch (err) {

@@ -118,7 +118,7 @@ function CardForm({ getCards }) {
 
     if (cardColor === []) {
       //cardAxiosString will always have the cardLegality parameter
-      let cardAxiosString = `http://localhost:5000/cards?format=${cardLegality}`
+      let cardAxiosString = `https://deckmaster.onrender.com/cards?format=${cardLegality}`
       //If any of the following parameters are present than append them to the cardAxiosString
       if (capitalizedName !== '') {
         cardAxiosString = cardAxiosString + `&name=${capitalizedName}`
@@ -140,7 +140,7 @@ function CardForm({ getCards }) {
     //Example: Create the request string for Black, Red, and White cards separately, and then if "multicolored" is true, create the string for Black/Red/White cards as well and return all requests together in the array "cardSearchStrings"
     for (let color of cardColor) {
       //cardAxiosString will always have the cardLegality and colors parameters
-      let cardAxiosString = `http://localhost:5000/cards?format=${cardLegality}&colors=${color}`
+      let cardAxiosString = `https://deckmaster.onrender.com/cards?format=${cardLegality}&colors=${color}`
       //If any of the following parameters are present than append them to the cardAxiosString
       if (capitalizedName !== '') {
         cardAxiosString = cardAxiosString + `&name=${capitalizedName}`
@@ -160,7 +160,7 @@ function CardForm({ getCards }) {
 
     if (checkedState['colorless'] === true) {
       //cardAxiosString will always have the cardLegality and colors parameters
-      let cardAxiosString = `http://localhost:5000/cards?format=${cardLegality}`
+      let cardAxiosString = `https://deckmaster.onrender.com/cards?format=${cardLegality}`
       //If any of the following parameters are present than append them to the cardAxiosString
       if (capitalizedName !== '') {
         cardAxiosString = cardAxiosString + `&name=${capitalizedName}`
@@ -181,7 +181,7 @@ function CardForm({ getCards }) {
     if (checkedState['multicolored'] === true) {
       cardColor = cardColor.join('')
       //cardAxiosString will always have the cardLegality and colors parameters
-      let cardAxiosString = `http://localhost:5000/cards?format=${cardLegality}&colors=${cardColor}`
+      let cardAxiosString = `https://deckmaster.onrender.com/cards?format=${cardLegality}&colors=${cardColor}`
       //If any of the following parameters are present than append them to the cardAxiosString
       if (capitalizedName !== '') {
         cardAxiosString = cardAxiosString + `&name=${capitalizedName}`
