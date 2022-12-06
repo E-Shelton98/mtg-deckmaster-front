@@ -23,7 +23,7 @@ function Decks() {
   //May tweak this so that the decks page starts with showing a set of decks already
   useEffect(() => {
     getDecks()
-  }, [])
+  })
 
   return (
     <div>

@@ -5,6 +5,8 @@ import axios from 'axios'
 //Import the style sheet that is specific to this component
 //Style sheets are organized as a mirror to the component organization
 
+import '../../../styles/cards/card-form.css'
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 //PRIMARY FILE COMMENTS
 
@@ -191,6 +193,7 @@ function CardForm({ getCards }) {
       }
       if (cardRestricted === true) {
         cardAxiosString = cardAxiosString + `&restricted=true`
+        console.log(cardAxiosString)
       }
       if (cardType !== '') {
         cardAxiosString = cardAxiosString + `&type_line=${cardType}`
@@ -241,26 +244,34 @@ function CardForm({ getCards }) {
           <option value='modern'>Modern</option>
           <option value='historic'>Historic</option>
           <option value='pauper'>Pauper</option>
+          <option value='vintage'>Vintage</option>
         </select>
 
-        <input
-          type='checkbox'
-          id='restricted'
-          name='restricted-modifier'
-          onChange={() => {
-            setCardRestricted(!cardRestricted)
-          }}
-        />
-
-        <div className='color-checkboxes'>
+        <label className='checkbox'>
           <input
             type='checkbox'
-            id='color-black'
-            name='color'
-            value='black'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
+            id='restricted'
+            name='restricted-modifier'
+            onChange={() => {
+              setCardRestricted(!cardRestricted)
+            }}
+          />
+          <span id='restricted-check'></span>
+        </label>
+
+        <div className='color-checkboxes'>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-black'
+              name='color'
+              value='black'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+              <span id='black-check'></span>
+          </label>
+
           <input
             type='checkbox'
             id='color-green'

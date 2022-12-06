@@ -1,0 +1,109 @@
+* {
+    box-sizing: border-box;
+}
+
+#format {
+    background-color: #B0C4DE;
+}
+
+.checkbox {
+    position: relative;
+    padding-left: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
+
+input[type=checkbox] {
+    visibility: hidden;
+}
+
+#restricted-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: darkRed
+}
+
+#black-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.checkbox:hover input ~ #restricted-check {
+   background-color: red; 
+}
+
+.checkbox:hover input ~ #black-check {
+   background-color: grey; 
+}
+
+.checkbox:hover input:active ~ #restricted-check {
+    background-color: lightcoral;
+}
+
+.checkbox:hover input:active ~ #black-check {
+    background-color: darkslategray;
+}
+
+.checkbox input:checked ~ #restricted-check {
+    background-color: red;
+}
+
+.checkbox input:checked ~ #black-check {
+    background-color: black;
+    border-radius: 50%;
+}
+
+#restricted-check:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+#black-check:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.checkbox input:checked ~ #restricted-check:after {
+    display: block;
+}
+
+.checkbox input:checked ~ #black-check:after {
+    display: block;
+}
+
+.checkbox #restricted-check:after {
+    left: 8px;
+    bottom: 5px;
+     width: 4px;
+     height: 10px;
+     border: solid white;
+     border-width: 0 4px 4px 0;
+     -webkit-transform: rotate(45deg);
+     -ms-transform: rotate(45deg);
+     transform: rotate(45deg);
+}
+
+.checkbox #black-check:after {
+    left: 8px;
+    bottom: 5px;
+     width: 2px;
+     height: 8px;
+     border: solid white;
+     border-width: 0 4px 4px 0;
+     -webkit-transform: rotate(45deg);
+     -ms-transform: rotate(45deg);
+     transform: rotate(45deg);
+}
