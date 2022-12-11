@@ -1,0 +1,77 @@
+#deck-form #format {
+    background-color: #B0C4DE;
+}
+
+#deck-form .color-checkboxes .checkbox {
+    position: relative;
+    margin: 5px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+}
+
+#deck-form .color-checkboxes .checkbox input[type=checkbox] {
+    visibility: hidden;
+}
+
+#deck-form .color-checkboxes {
+    margin: 5px;
+}
+
+#deck-form .color-checkboxes .checkbox #black-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: darkgray;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+#deck-form .color-checkboxes .checkbox:hover input ~ #black-check {
+   background-color: slategray; 
+}
+
+#deck-form .color-checkboxes .checkbox input:checked ~ #black-check {
+    background-color: black;
+}
+
+#deck-form .color-checkboxes .checkbox #green-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: lightgreen;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+#deck-form .color-checkboxes .checkbox:hover input ~ #green-check {
+   background-color: seagreen; 
+}
+
+#deck-form .color-checkboxes .checkbox input:checked ~ #green-check {
+    background-color: green;
+    border-radius: 50%;
+}
+
+#deck-form .color-checkboxes .checkbox #red-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: salmon;
+    border: 1px solid white;
+    border-radius: 50%;
+}
+
+#deck-form .color-checkboxes .checkbox:hover input ~ #red-check {
+   background-color: crimson; 
+}
+
+#deck-form .color-checkboxes .checkbox input:checked ~ #red-check {
+    background-color: red;
+}

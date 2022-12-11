@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
+//Import axios for fetch requests
 import axios from 'axios'
+
+//Import the style sheet that is specific to this component
+//Style sheets are organized as a mirror to the component organization
+
+import '../../../styles/decks/deck-form.css'
 
 function DeckForm({ getDecks }) {
   //LEGALITY === FORMAT IN DB (ie. format = standard means LEGAL in standard)
@@ -72,6 +78,16 @@ function DeckForm({ getDecks }) {
       }
     }
 
+    if ((Array.isArray(deckColor)) && (!deckColor.length)) {
+      try {
+        let deckAxiosString = `https://deckmaster.onrender.com/decks?format=${deckLegality}&name=${deckName}`
+
+        deckSearchStrings.push(deckAxiosString)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
     if (checkedState['multicolored'] === true) {
       deckColor = deckColor.join('')
       try {
@@ -111,7 +127,7 @@ function DeckForm({ getDecks }) {
 
   return (
     <div>
-      <form
+      <form id='deck-form'
         onSubmit={(e) => {
           searchDecks(checkedState, deckName, e)
         }}>
@@ -135,54 +151,83 @@ function DeckForm({ getDecks }) {
           value={deckName}
         />
         <div className='color-checkboxes'>
-          <input
-            type='checkbox'
-            id='color-black'
-            name='color'
-            value='black'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-green'
-            name='color'
-            value='green'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-red'
-            name='color'
-            value='red'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-blue'
-            name='color'
-            value='blue'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-white'
-            name='color'
-            value='white'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-multicolored'
-            name='color'
-            value='multicolored'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-black'
+              name='color'
+              value='black'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='black-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-green'
+              name='color'
+              value='green'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='green-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-red'
+              name='color'
+              value='red'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='red-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-blue'
+              name='color'
+              value='blue'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='blue-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-white'
+              name='color'
+              value='white'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='white-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-multicolored'
+              name='color'
+              value='multicolored'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='multicolored-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-colorless'
+              name='color'
+              value='colorless'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='colorless-check'></span>
+          </label>
         </div>
         <button type=''>Search Decks</button>
       </form>
