@@ -269,57 +269,74 @@ function CardForm({ getCards }) {
               onClick={(e) => {
                 handleCheckboxClick(e.target.value)
               }}></input>
-              <span id='black-check'></span>
+            <span id='black-check'></span>
           </label>
-
-          <input
-            type='checkbox'
-            id='color-green'
-            name='color'
-            value='green'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-red'
-            name='color'
-            value='red'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-blue'
-            name='color'
-            value='blue'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-white'
-            name='color'
-            value='white'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-multicolored'
-            name='color'
-            value='multicolored'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
-          <input
-            type='checkbox'
-            id='color-colorless'
-            name='color'
-            value='colorless'
-            onClick={(e) => {
-              handleCheckboxClick(e.target.value)
-            }}></input>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-green'
+              name='color'
+              value='green'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='green-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-red'
+              name='color'
+              value='red'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='red-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-blue'
+              name='color'
+              value='blue'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='blue-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-white'
+              name='color'
+              value='white'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='white-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-multicolored'
+              name='color'
+              value='multicolored'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+            <span id='multicolored-check'></span>
+          </label>
+          <label className='checkbox'>
+            <input
+              type='checkbox'
+              id='color-colorless'
+              name='color'
+              value='colorless'
+              onClick={(e) => {
+                handleCheckboxClick(e.target.value)
+              }}></input>
+              <span id='colorless-check'></span>
+          </label>
         </div>
         <input
           type='checkbox'
