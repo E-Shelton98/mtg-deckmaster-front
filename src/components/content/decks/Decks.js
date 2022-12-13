@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DeckForm from './DeckForm'
 import DeckList from './DeckList'
+import NewDeck from './NewDeck'
 
 function Decks() {
   const [decks, setDecks] = useState([])
@@ -29,6 +30,7 @@ function Decks() {
     <div>
       <DeckForm getDecks={getDecks} />
       <DeckList decks={decks} pageLimit={5} dataLimit={8} />
+      <button>New Deck</button>
     </div>
   )
 }
