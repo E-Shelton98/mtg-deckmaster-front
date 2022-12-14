@@ -1,8 +1,27 @@
 import React, { useEffect, useState } from 'react'
+
+//Import the DeckForm component to create the form used for searching for decks
 import DeckForm from './DeckForm'
+
+//Import the DeckList component to create the pagination component used to display the search results
 import DeckList from './DeckList'
+
+//Import the NewDeck component to function as a separate page for creating a new deck <<--- NOT WORKING YET --->>
 import NewDeck from './NewDeck'
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//PRIMARY FILE COMMENTS
+
+//Decks component function to establish a parent component for the deck search, display, and creation functionalities of the site. Intended to be used as a separate page within the site.
+
+//Decks does not receive any props, but it does pass many to its children components DeckForm and DeckList.
+
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+//DECKFORM
+//DeckForm receives the prop "getDecks" which is the function of same name which receives and concats the search data from the DeckForm
+
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+//DECKLIST
 function Decks() {
   const [decks, setDecks] = useState([])
 
