@@ -22,9 +22,24 @@ import NewDeck from './NewDeck'
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //DECKLIST
+//DeckList receives the props "decks", "pageLimit", and "dataLimit"
+//Decks is the deck data that has been returned from the search
+//PageLimit is the limit of pages shown in the page selection bar at one time
+//DataLimit is the limit of decks shown on a page at one time
+
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+//NewDeck
+//NewDeck currently does not receive any props, but is still under construction so that will change as needed
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//PRIMARY FILE FUNCTION
+
 function Decks() {
+  //Create state variables decks and setDecks to keep track of the search results requested by the user
   const [decks, setDecks] = useState([])
 
+  //Async function getDecks which is passed to the DeckForm component and receives an array of strings to be used as requests to the server
+  //This function also concat's the various search requests if needed to provide a clean response of multiple colors of card at once
   async function getDecks(deckAxiosRes) {
     console.log(deckAxiosRes)
     if (deckAxiosRes !== undefined) {
