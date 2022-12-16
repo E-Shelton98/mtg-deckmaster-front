@@ -51,13 +51,15 @@ function CardForm({ getCards }) {
   //cardName is the value of the name input field of the form
   //e is the stand-in for the event variable to be used to prevent the default refresh on the form's submission
   async function searchCards(checkedState, cardIsLand, cardName, e) {
+    e.preventDefault()
+    
     //Create variables "cardSearchStrings" and "promises" as empty arrays to be used later for processing form input data before querying
     let cardSearchStrings = []
     let promises = []
-    e.preventDefault()
+    
 
-    //Function to convert the checkbox inputs of the form into a string of letters relating to the various colors of magic for querying.
-    //Database requires colors in order of 'BGRUW' to be able to find cards.
+    //Function to convert the checkbox inputs of the form into a string of letters relating to the various colors of magic for querying
+    //Database requires colors in order of 'BGRUW' to be able to find cards
     //Example Input: CheckedState = {'black': true, 'green': false, 'red': true, 'blue': true, 'white': false}
     //Example Output: cardColor = ['B','R','U']
     function cardColorStringFunction(checkedState) {

@@ -22,6 +22,7 @@ function DeckForm({ getDecks }) {
   const [deckLegality, setDeckLegality] = useState('Standard')
   const [deckName, setDeckName] = useState('')
 
+  //Create state "checkedState" to keep track of the deck color checkboxes checked by the user for creating the deckColor variable for the search query
   const [checkedState, setCheckedState] = useState({
     black: false,
     green: false,
@@ -31,12 +32,22 @@ function DeckForm({ getDecks }) {
     multicolored: false,
   })
 
+  //Async function for creating the query to send to the backend to search for decks
+  //Input variables are "checkedState", "deckName", and "e"
+  //checkedState is the state variable for keeping track of the user inputs on the deck color checkboxes
+  //deckName is the value of the name input field of the form
+  //e is the stand-in for the event variable to be used to prevent the default refresh on the form's submission
   async function searchDecks(checkedState, deckName, e) {
     e.preventDefault()
 
+    //Create variables "deckSearchStrings" and "promises" as empty arrays to be used later for processing form input data before querying
     let deckSearchStrings = []
     let promises = []
 
+    //Function to convert the checkbox inputs of the form into a string of letters relating to the various colors of magic for querying
+    //Database requires colors in order of 'BGRUW' to be able to find decks
+    //Example Input: CheckedState = {'black': true, 'green': false, 'red': true, 'blue': true, 'white': false}
+    //Example Output: deckColor = ['B','R','U']
     let deckColorStringFunction = function (checkedState) {
       let deckColor = []
       if (checkedState['black']) {
@@ -58,6 +69,9 @@ function DeckForm({ getDecks }) {
       return deckColor
     }
 
+    //Function to capitalize the first letter of each word of the name input
+    //Example Input: 'zephyr boots'
+    //Example Output: 'Zephyr Boots'
     function capitalizeNameFunction(textInput) {
       let words = textInput.split(' ')
 
@@ -70,14 +84,20 @@ function DeckForm({ getDecks }) {
       return words
     }
 
+    //Initialize variable "deckColor" which will be an array of strings related to the color of searched decks
+    //Example: deckColor = ['B','R',W']
     let deckColor = deckColorStringFunction(checkedState)
 
+    //Initialize variable "capitalizedName" to hold the value of the deck name input after capitalization of the first letter of each word
     let capitalizedName = ''
 
+    //If a deck name is given in the search form, then capitalize the first letter of each word
     if (deckName !== '') {
       capitalizedName = capitalizeNameFunction(deckName)
     }
 
+    //Create the axios get request string for each color of deckColor, so that the user can receive results for all colors together
+    //Example: Create the request string for Black, Red, and White decks separately, then if "multicolored" is true, create the string for Black/Red/White decks as well and return all requests together in the array "deckSearchStrings"
     for (let color of deckColor) {
       try {
         let deckAxiosString = `https://deckmaster.onrender.com/decks?format=${deckLegality}&colors=${color}&name=${capitalizedName}`
