@@ -12,7 +12,7 @@ import '../../../styles/cards/card-form.css'
 
 //CardForm component function to establish the creation of a form for passing parameters as an axios request to the backend for searching of the database
 //The CardForm component receives one single prop named "getCards" which is a function in the parent Cards component
-//getCards is used to concat the searched data as well as set the "cards" state in the parent component to the data
+//getCards is used to concat the searched data as well as set the "cards" state in the parent component to the received data
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //FILE COMPONENT FUNCTION

@@ -7,6 +7,16 @@ import axios from 'axios'
 
 import '../../../styles/decks/deck-form.css'
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//PRIMARY FILE COMMENTS
+
+//DeckForm component function to establish the creation of a form for passing parameters as an axios request to the backend for searching of the database
+//The DeckForm component receives one single prop named "getDecks" which is a function in the parent Decks component
+//getDecks is used to concat the searched data as well as set the "decks" state in the parent component to the received data
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//FILE COMPONENT FUNCTION
+
 function DeckForm({ getDecks }) {
   //LEGALITY === FORMAT IN DB (ie. format = standard means LEGAL in standard)
   const [deckLegality, setDeckLegality] = useState('Standard')
