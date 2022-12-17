@@ -52,11 +52,10 @@ function CardForm({ getCards }) {
   //e is the stand-in for the event variable to be used to prevent the default refresh on the form's submission
   async function searchCards(checkedState, cardIsLand, cardName, e) {
     e.preventDefault()
-    
+
     //Create variables "cardSearchStrings" and "promises" as empty arrays to be used later for processing form input data before querying
     let cardSearchStrings = []
     let promises = []
-    
 
     //Function to convert the checkbox inputs of the form into a string of letters relating to the various colors of magic for querying
     //Database requires colors in order of 'BGRUW' to be able to find cards
@@ -203,13 +202,13 @@ function CardForm({ getCards }) {
       //Once the cardAxiosString is complete push it into the cardSearchStrings array
       cardSearchStrings.push(cardAxiosString)
     }
-    console.log(cardSearchStrings)
-    //getCards(cardSearchResults)
 
+    //For each searchString in cardSearchStrings push the axios request into the promises array to allow for multiple requests at once.
     for (let searchString of cardSearchStrings) {
       promises.push(axios.get(searchString))
     }
 
+    //Pass the result of each promise through the getCards function from the parent component Cards
     Promise.all(promises)
       .then((results) => {
         getCards(results)
@@ -219,15 +218,13 @@ function CardForm({ getCards }) {
       })
   }
 
+  //Function for updating the checkedState colors of the mana color checkboxes in the form
   function handleCheckboxClick(clickedCheckbox) {
     let updatedColor = { [clickedCheckbox]: !checkedState[clickedCheckbox] }
-    console.log('handleCheckboxClick updatedColor: ', updatedColor)
     setCheckedState((checkedState) => ({
       ...checkedState,
       ...updatedColor,
     }))
-
-    console.log('handleCheckboxClick checkedState: ', checkedState)
   }
 
   return (
@@ -337,7 +334,7 @@ function CardForm({ getCards }) {
               onClick={(e) => {
                 handleCheckboxClick(e.target.value)
               }}></input>
-              <span id='colorless-check'></span>
+            <span id='colorless-check'></span>
           </label>
         </div>
         <input

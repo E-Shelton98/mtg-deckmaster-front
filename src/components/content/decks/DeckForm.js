@@ -108,7 +108,8 @@ function DeckForm({ getDecks }) {
       }
     }
 
-    if ((Array.isArray(deckColor)) && (!deckColor.length)) {
+    //If the user is searching for a deck without inputting a color option then use the axios string below
+    if (Array.isArray(deckColor) && !deckColor.length) {
       try {
         let deckAxiosString = `https://deckmaster.onrender.com/decks?format=${deckLegality}&name=${deckName}`
 
@@ -118,23 +119,23 @@ function DeckForm({ getDecks }) {
       }
     }
 
+    //If the user is searching for decks based on color and selected multicolored, then search for decks with all selected colors at once
     if (checkedState['multicolored'] === true) {
       deckColor = deckColor.join('')
       try {
         let deckAxiosString = `https://deckmaster.onrender.com/decks?format=${deckLegality}&colors=${deckColor}&name=${capitalizedName}`
-
         deckSearchStrings.push(deckAxiosString)
       } catch (err) {
         console.error(err)
       }
     }
 
-    console.log(deckSearchStrings)
-
+    //For each searchString in deckSearchStrings push the axios request into the promises array to allow for multiple requests at once.
     for (let searchString of deckSearchStrings) {
       promises.push(axios.get(searchString))
     }
 
+    //Pass the result of each promise through the getDecks function from the parent component Decks
     Promise.all(promises)
       .then((results) => {
         getDecks(results)
@@ -144,20 +145,19 @@ function DeckForm({ getDecks }) {
       })
   }
 
+  //Function for updating the checkedState colors of the mana color checkboxes in the form
   function handleCheckboxClick(clickedCheckbox) {
     let updatedColor = { [clickedCheckbox]: !checkedState[clickedCheckbox] }
-    console.log('handleCheckboxClick updatedColor: ', updatedColor)
     setCheckedState((checkedState) => ({
       ...checkedState,
       ...updatedColor,
     }))
-
-    console.log('handleCheckboxClick checkedState: ', checkedState)
   }
 
   return (
     <div>
-      <form id='deck-form'
+      <form
+        id='deck-form'
         onSubmit={(e) => {
           searchDecks(checkedState, deckName, e)
         }}>
