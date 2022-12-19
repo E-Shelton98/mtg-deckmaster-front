@@ -218,7 +218,7 @@ function CardForm({ getCards }) {
       })
   }
 
-  //Function for updating the checkedState colors of the mana color checkboxes in the form
+  //Function for updating the checkedState colors of the mana color checkboxes in the form|
   function handleCheckboxClick(clickedCheckbox) {
     let updatedColor = { [clickedCheckbox]: !checkedState[clickedCheckbox] }
     setCheckedState((checkedState) => ({
